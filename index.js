@@ -3,12 +3,16 @@ import mongoose from 'mongoose';
 var app = express();
 
 import studentsRoute from './routes/students.js';
+import schoolsRoute from './routes/schools.js';
 
 const uri = "mongodb+srv://admin:qPfZM72Hz2hpjUfF@cluster0.vegfhtd.mongodb.net/?retryWrites=true&w=majority"
 
 app.use(express.json());
-//Use the students router
+// Use the students router
 app.use('/students', studentsRoute);
+
+// Working on schools route
+app.use('/schools', schoolsRoute);
 
 const PORT = 3000;
 
