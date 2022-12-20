@@ -1,6 +1,6 @@
 import Teachers from '../models/teachers.model.js';
 
-export function getAllTeachers(_req, res) {
+export async function getAllTeachers(_req, res) {
     try {
         Teachers.find((err, val) => {
             if (err) {
@@ -15,7 +15,7 @@ export function getAllTeachers(_req, res) {
     }
 }
 
-export function getTeacher(req, res) {
+export async function getTeacher(req, res) {
     try {
         Teachers.find({ _id: req.params.id }, (err, val) => {
             if (err) {
@@ -30,10 +30,10 @@ export function getTeacher(req, res) {
     }
 }
 
-export function addNewTeacher(req, res) {
+export async function addNewTeacher(req, res) {
     try {
         const teacher = new Teachers(req.body);
-        teacher.save().then(() => console.log(`Teacher ${req.body.name} added.`));
+        await teacher.save().then(() => console.log(`Teacher ${req.body.name} added.`));
 
         // Return (200)
         res.status(200).send(teacher);

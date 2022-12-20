@@ -1,6 +1,6 @@
 import Students from '../models/students.model.js';
 
-export function getAllStudents(_req, res) {
+export async function getAllStudents(_req, res) {
     try {
         Students.find((err, val) => {
             if (err) {
@@ -15,7 +15,7 @@ export function getAllStudents(_req, res) {
     }
 }
 
-export function getStudent(req, res) {
+export async function getStudent(req, res) {
     try {
         Students.find({ _id: req.params.id }, (err, val) => {
             if (err) {
@@ -30,10 +30,10 @@ export function getStudent(req, res) {
     }
 }
 
-export function addNewStudent(req, res) {
+export async function addNewStudent(req, res) {
     try {
         const student = new Students(req.body);
-        student.save().then(() => console.log(`Student ${req.body.name} added.`));
+        await student.save().then(() => console.log(`Student ${req.body.name} added.`));
 
         // Return (200)
         res.status(200).send(student);

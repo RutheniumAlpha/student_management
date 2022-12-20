@@ -1,6 +1,6 @@
 import Schools from '../models/schools.model.js';
 
-export function getAllSchools(_req, res) {
+export async function getAllSchools(_req, res) {
     try {
         Schools.find((err, val) => {
             if (err) {
@@ -15,7 +15,7 @@ export function getAllSchools(_req, res) {
     }
 }
 
-export function getSchool(req, res) {
+export async function getSchool(req, res) {
     try {
         Schools.find({ _id: req.params.id }, (err, val) => {
             if (err) {
@@ -30,10 +30,10 @@ export function getSchool(req, res) {
     }
 }
 
-export function addNewSchool(req, res) {
+export async function addNewSchool(req, res) {
     try {
         const school = new Schools(req.body);
-        school.save().then(() => console.log(`School ${req.body.name} added.`));
+        await school.save().then(() => console.log(`School ${req.body.name} added.`));
 
         // Return (200)
         res.status(200).send(school);

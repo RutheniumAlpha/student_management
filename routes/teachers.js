@@ -1,27 +1,20 @@
 import express from 'express';
-import {
-    getAllTeachers,
-    getTeacher,
-    addNewTeacher,
-    deleteTeacher,
-    updateTeacher,
-} from '../controllers/teachers.controller.js';
+import Controller from '../controllers/controller.js';
 
 var router = express.Router();
-
 // Get all the schools
-router.get("/", getAllTeachers);
+router.get("/", Controller.getAllTeachers);
 
 // Get a single school with the given id
-router.get("/:id", getTeacher);
+router.get("/:id", Controller.getTeacher);
 
 // Add a new school
-router.post("/", addNewTeacher);
+router.post("/", Controller.addNewTeacher);
 
 // Delete a school
-router.delete("/:id", deleteTeacher);
+router.delete("/:id", Controller.deleteTeacher);
 
 // Update a school
-router.put("/:id", updateTeacher);
+router.put("/:id", Controller.updateTeacher);
 
 export default router;

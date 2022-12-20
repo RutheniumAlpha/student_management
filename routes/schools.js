@@ -1,55 +1,42 @@
 import express from 'express';
-import {
-    getAllSchools,
-    getSchool,
-    addNewSchool,
-    deleteSchool,
-    updateSchool,
-    addStudent,
-    removeStudent,
-    addTeacher,
-    removeTeacher,
-    addClass,
-    removeClass,
-    updateClass
-} from '../controllers/schools.controller.js';
+import Controller from '../controllers/controller.js';
 
 var router = express.Router();
 
 // Get all the schools
-router.get("/", getAllSchools);
+router.get("/", Controller.getAllSchools);
 
 // Get a single school with the given id
-router.get("/:id", getSchool);
+router.get("/:id", Controller.getSchool);
 
 // Add a new school
-router.post("/", addNewSchool);
+router.post("/", Controller.addNewSchool);
 
 // Delete a school
-router.delete("/:id", deleteSchool);
+router.delete("/:id", Controller.deleteSchool);
 
 // Update a school
-router.put("/:id", updateSchool);
+router.put("/:id", Controller.updateSchool);
 
 // Add student to a given class
-router.post("/:id/class/students/", addStudent);
+router.post("/:id/class/students/", Controller.addStudent);
 
 // Remove student from a given class
-router.delete("/:id/class/students/", removeStudent);
+router.delete("/:id/class/students/", Controller.removeStudent);
 
 // Add teacher to a given class
-router.post("/:id/class/teachers/", addTeacher);
+router.post("/:id/class/teachers/", Controller.addTeacher);
 
 // Remove teacher from a given class
-router.delete("/:id/class/teachers/", removeTeacher);
+router.delete("/:id/class/teachers/", Controller.removeTeacher);
 
 // Add class to a school
-router.post("/:id/class/", addClass);
+router.post("/:id/class/", Controller.addClass);
 
 // Remove class from a school
-router.delete("/:id/class/:classID", removeClass);
+router.delete("/:id/class/:classID", Controller.removeClass);
 
 // Update a class
-router.put("/:id/class/:classID", updateClass);
+router.put("/:id/class/:classID", Controller.updateClass);
 
 export default router;
