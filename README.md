@@ -45,10 +45,10 @@ Access the API from [https://student-management.glitch.me/](https://student-mana
 
 18. **`PUT`** `/schools/:id/class/:classID` Update a class of a school.
 
-19. **`POST`** `/schools/:id/class/students/?studentID=&classID=` Add a new student to a class by Student ID.
+19. **`POST`** `/schools/:id/class/students/?studentID=&classID=` Add a student to a class by Student ID.
 
-20. **`DELETE`** `/schools/:id/class/students/?studentID=&classID=` Remove a existing student from a class by Student ID.
+20. **`DELETE`** `/schools/:id/class/students/?studentID=&classID=` Remove a student from a class by Student ID.
 
-21. **`POST`** `/schools/:id/class/teachers/?teacherID=&classID=` Add a new teacher to a class by Teacher ID.
+21. **`POST`** `/schools/:id/class/teachers/?teacherID=&classID=` Add a teacher to a class by Teacher ID.
 
-22. **`DELETE`** `/schools/:id/class/teachers/?teacherID=&classID=` Remove a existing teacher from a class by Teacher ID.
+22. **`DELETE`** `/schools/:id/class/teachers/?teacherID=&classID=` Remove a teacher from a class by Teacher ID.
