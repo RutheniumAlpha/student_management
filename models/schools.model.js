@@ -6,12 +6,12 @@ const schoolsSchema = mongoose.Schema({
     'schoolAddress': String,
     'contactNumber': Number,
     'email': String,
-    'students': {
+    'classes': {
         required: false,
-        type: Array,
-        of: String,
-        default: []
-    }
+        type: Map,
+        of: Map,
+        default: {}
+    },
 });
 
 export default mongoose.model('Schools', schoolsSchema);
