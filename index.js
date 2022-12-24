@@ -32,7 +32,7 @@ async function connect() {
 connect();
 
 app.get("/", (_req, res) => {
-    res.status(200).send("<b>Student Management API</b>")
+    res.status(200).send("<b> Student Management API </b>")
 });
 
 app.listen(PORT, () => console.log("Connected to PORT 3000"));
