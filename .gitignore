@@ -1,4 +1,4 @@
 node_modules/
-/auth.txt
+/.env
 /api.rest
 /class-schema.txt

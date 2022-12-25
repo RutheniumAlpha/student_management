@@ -7,7 +7,9 @@ const studentsSchema = mongoose.Schema({
     division: String,
     yearOfBirth: Number,
     address: String,
-    contact: Number
+    contact: Number,
+    username: String,
+    password: String
 });
 
 export default mongoose.model('Students', studentsSchema);
