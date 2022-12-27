@@ -1,23 +1,24 @@
 import express from "express";
 import Controller from "../controllers/controller.js";
 import { check } from "express-validator";
+import middleware from "../middleware/middleware.js";
 
 var router = express.Router();
 
 // Get all the students
-router.get("/", Controller.getAllStudents);
+router.get("/", middleware.adminPassAuth, Controller.getAllStudents);
 
 // Get a single student with the given id
-router.get("/:id", Controller.getStudent);
+router.get("/:id", middleware.adminPassAuth, Controller.getStudent);
 
 // Add a new student
-router.post("/", Controller.addNewStudent);
+router.post("/", middleware.adminPassAuth, Controller.addNewStudent);
 
 // Delete a student
-router.delete("/:id", Controller.deleteStudent);
+router.delete("/:id", middleware.tokenAuth, Controller.deleteStudent);
 
 // Update a student
-router.put("/:id", Controller.updateStudent);
+router.put("/:id", middleware.tokenAuth, Controller.updateStudent);
 
 // Register a student
 router.post(

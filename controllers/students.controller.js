@@ -122,9 +122,13 @@ export async function registerStudent(req, res) {
     await student.save().then(() => console.log(body));
 
     // Create JWT token
-    const token = JWT.sign({ id: student.id }, process.env.JWT_SECRET, {
-      expiresIn: 259200,
-    });
+    const token = JWT.sign(
+      { id: student.id, role: "student" },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: 259200,
+      }
+    );
 
     // Return JWT token
     res.status(200).json({
@@ -166,9 +170,13 @@ export async function loginStudent(req, res) {
     }
 
     // Create JWT token
-    const token = JWT.sign({ id: user[0].id }, process.env.JWT_SECRET, {
-      expiresIn: 259200,
-    });
+    const token = JWT.sign(
+      { id: user[0].id, role: "student" },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: 259200,
+      }
+    );
 
     // Return JWT token
     res.status(200).json({
