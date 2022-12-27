@@ -392,7 +392,7 @@ export async function registerSchool(req, res) {
 
     // Create JWT token
     const token = JWT.sign(
-      { id: student.id, role: "school" },
+      { id: school.id, role: "school" },
       process.env.JWT_SECRET,
       {
         expiresIn: 259200,

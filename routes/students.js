@@ -6,19 +6,19 @@ import middleware from "../middleware/middleware.js";
 var router = express.Router();
 
 // Get all the students
-router.get("/", middleware.adminPassAuth, Controller.getAllStudents);
+router.get("/", middleware.adminAuth, Controller.getAllStudents);
 
 // Get a single student with the given id
-router.get("/:id", middleware.adminPassAuth, Controller.getStudent);
+router.get("/:id", middleware.adminAuth, Controller.getStudent);
 
 // Add a new student
-router.post("/", middleware.adminPassAuth, Controller.addNewStudent);
+router.post("/", middleware.adminAuth, Controller.addNewStudent);
 
 // Delete a student
-router.delete("/:id", middleware.tokenAuth, Controller.deleteStudent);
+router.delete("/:id", middleware.studentAuth, Controller.deleteStudent);
 
 // Update a student
-router.put("/:id", middleware.tokenAuth, Controller.updateStudent);
+router.put("/:id", middleware.studentAuth, Controller.updateStudent);
 
 // Register a student
 router.post(

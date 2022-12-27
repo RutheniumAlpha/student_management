@@ -16,8 +16,17 @@ export default async (req, res, next) => {
 
   try {
     const user = verify(token, process.env.JWT_SECRET);
-    req.userID = user.id;
-    next();
+    if (user.role === "teacher") {
+      next();
+    } else {
+      res.status(400).json({
+        errors: [
+          {
+            msg: "Invalid Token",
+          },
+        ],
+      });
+    }
   } catch (error) {
     res.status(400).json({
       errors: [

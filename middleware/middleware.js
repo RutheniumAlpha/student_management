@@ -1,7 +1,11 @@
-import adminPassAuth from "./adminPassAuth.js";
-import tokenAuth from "./tokenAuth.js";
+import adminAuth from "./adminPassAuth.js";
+import studentAuth from "./studentTokenAuth.js";
+import teacherAuth from "./teacherTokenAuth.js";
+import schoolAuth from "./schoolTokenAuth.js";
 
 export default {
-  adminPassAuth,
-  tokenAuth,
+  adminAuth,
+  studentAuth,
+  teacherAuth,
+  schoolAuth,
 };
