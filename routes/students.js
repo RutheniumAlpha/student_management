@@ -15,10 +15,10 @@ router.get("/:id", middleware.adminAuth, Controller.getStudent);
 router.post("/", middleware.adminAuth, Controller.addNewStudent);
 
 // Delete a student
-router.delete("/:id", middleware.studentAuth, Controller.deleteStudent);
+router.delete("/", middleware.studentAuth, Controller.deleteStudent);
 
 // Update a student
-router.put("/:id", middleware.studentAuth, Controller.updateStudent);
+router.put("/", middleware.studentAuth, Controller.updateStudent);
 
 // Register a student
 router.post(

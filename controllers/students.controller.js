@@ -50,10 +50,10 @@ export async function addNewStudent(req, res) {
 
 export async function deleteStudent(req, res) {
   try {
-    if ((await Students.exists({ _id: req.params.id })) == null) {
+    if ((await Students.exists({ _id: req.userID })) == null) {
       res.status(404).send("ID not found");
     } else {
-      Students.deleteOne({ _id: req.params.id }, (error) => {
+      Students.deleteOne({ _id: req.userID }, (error) => {
         if (error) return res.status(500).send(error);
       })
         .clone()
@@ -69,10 +69,11 @@ export async function deleteStudent(req, res) {
 
 export async function updateStudent(req, res) {
   try {
-    if ((await Students.exists({ _id: req.params.id })) == null) {
+    console.log(req.userID);
+    if ((await Students.exists({ _id: req.userID })) == null) {
       res.status(404).send("ID not found");
     } else {
-      Students.updateOne({ _id: req.params.id }, req.body, (error) => {
+      Students.updateOne({ _id: req.userID }, req.body, (error) => {
         if (error) return res.status(500).send(error);
       })
         .clone()
@@ -121,19 +122,8 @@ export async function registerStudent(req, res) {
     const student = new Students(body);
     await student.save().then(() => console.log(body));
 
-    // Create JWT token
-    const token = JWT.sign(
-      { id: student.id, role: "student" },
-      process.env.JWT_SECRET,
-      {
-        expiresIn: 259200,
-      }
-    );
-
-    // Return JWT token
-    res.status(200).json({
-      token: token,
-    });
+    // Return
+    res.status(200).json(student);
   } catch (error) {
     console.log(error);
     res.status(500).send(error);
@@ -155,7 +145,7 @@ export async function loginStudent(req, res) {
         ],
       });
     }
-    var user = await Students.find({ id: exists.id });
+    var user = await Students.find({ _id: exists._id });
 
     // Verify the password
     let isMatch = await bcrypt.compare(password, user[0].password);
@@ -171,17 +161,21 @@ export async function loginStudent(req, res) {
 
     // Create JWT token
     const token = JWT.sign(
-      { id: user[0].id, role: "student" },
+      { id: user[0]._id, role: "student" },
       process.env.JWT_SECRET,
       {
         expiresIn: 259200,
       }
     );
+    console.log(user);
 
-    // Return JWT token
-    res.status(200).json({
-      token: token,
-    });
+    // Store in cookie
+    res
+      .cookie("access_token", token, {
+        httpOnly: true,
+      })
+      .status(200)
+      .json({ userID: user[0]._id });
   } catch (error) {
     console.log(error);
     res.status(500).send(error);

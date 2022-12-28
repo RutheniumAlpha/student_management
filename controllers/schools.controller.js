@@ -50,10 +50,10 @@ export async function addNewSchool(req, res) {
 
 export async function deleteSchool(req, res) {
   try {
-    if ((await Schools.exists({ _id: req.params.id })) == null) {
+    if ((await Schools.exists({ _id: req.userID })) == null) {
       res.status(404).send("ID not found");
     } else {
-      Schools.deleteOne({ _id: req.params.id }, (error) => {
+      Schools.deleteOne({ _id: req.userID }, (error) => {
         if (error) return res.status(500).send(error);
       })
         .clone()
@@ -69,10 +69,10 @@ export async function deleteSchool(req, res) {
 
 export async function updateSchool(req, res) {
   try {
-    if ((await Schools.exists({ _id: req.params.id })) == null) {
+    if ((await Schools.exists({ _id: req.userID })) == null) {
       res.status(404).send("ID not found");
     } else {
-      Schools.updateOne({ _id: req.params.id }, req.body, (error) => {
+      Schools.updateOne({ _id: req.userID }, req.body, (error) => {
         if (error) return res.status(500).send(error);
       })
         .clone()
@@ -88,18 +88,18 @@ export async function updateSchool(req, res) {
 
 export async function addStudent(req, res) {
   try {
-    if ((await Schools.exists({ _id: req.params.id })) == null) {
+    if ((await Schools.exists({ _id: req.userID })) == null) {
       res.status(404).send("ID not found");
     } else {
       var classes = {};
       var classID = req.query.classID;
       var studentID = req.query.studentID;
-      await Schools.findById(req.params.id).then((val) => {
+      await Schools.findById(req.userID).then((val) => {
         classes = val.classes;
       });
       classes.get(classID).get("students").push(studentID);
       await Schools.updateOne(
-        { _id: req.params.id },
+        { _id: req.userID },
         { $set: { classes: classes } },
         (error) => {
           if (error) return res.status(500).send(error);
@@ -118,13 +118,13 @@ export async function addStudent(req, res) {
 
 export async function removeStudent(req, res) {
   try {
-    if ((await Schools.exists({ _id: req.params.id })) == null) {
+    if ((await Schools.exists({ _id: req.userID })) == null) {
       res.status(404).send("ID not found");
     } else {
       var classes = {};
       var classID = req.query.classID;
       var studentID = req.query.studentID;
-      await Schools.findById(req.params.id).then((val) => {
+      await Schools.findById(req.userID).then((val) => {
         classes = val.classes;
       });
       classes
@@ -132,7 +132,7 @@ export async function removeStudent(req, res) {
         .get("students")
         .splice(classes.get(classID).get("students").indexOf(studentID), 1);
       await Schools.updateOne(
-        { _id: req.params.id },
+        { _id: req.userID },
         { $set: { classes: classes } },
         (error) => {
           if (error) return res.status(500).send(error);
@@ -151,18 +151,18 @@ export async function removeStudent(req, res) {
 
 export async function addTeacher(req, res) {
   try {
-    if ((await Schools.exists({ _id: req.params.id })) == null) {
+    if ((await Schools.exists({ _id: req.userID })) == null) {
       res.status(404).send("ID not found");
     } else {
       var classes = {};
       var classID = req.query.classID;
       var teacherID = req.query.teacherID;
-      await Schools.findById(req.params.id).then((val) => {
+      await Schools.findById(req.userID).then((val) => {
         classes = val.classes;
       });
       classes.get(classID).get("teachers").push(teacherID);
       await Schools.updateOne(
-        { _id: req.params.id },
+        { _id: req.userID },
         { $set: { classes: classes } },
         (error) => {
           if (error) return res.status(500).send(error);
@@ -181,13 +181,13 @@ export async function addTeacher(req, res) {
 
 export async function removeTeacher(req, res) {
   try {
-    if ((await Schools.exists({ _id: req.params.id })) == null) {
+    if ((await Schools.exists({ _id: req.userID })) == null) {
       res.status(404).send("ID not found");
     } else {
       var classes = {};
       var classID = req.query.classID;
       var teacherID = req.query.teacherID;
-      await Schools.findById(req.params.id).then((val) => {
+      await Schools.findById(req.userID).then((val) => {
         classes = val.classes;
       });
       classes
@@ -195,7 +195,7 @@ export async function removeTeacher(req, res) {
         .get("teachers")
         .splice(classes.get(classID).get("teachers").indexOf(teacherID), 1);
       await Schools.updateOne(
-        { _id: req.params.id },
+        { _id: req.userID },
         { $set: { classes: classes } },
         (error) => {
           if (error) return res.status(500).send(error);
@@ -214,11 +214,11 @@ export async function removeTeacher(req, res) {
 
 export async function addClass(req, res) {
   try {
-    if ((await Schools.exists({ _id: req.params.id })) == null) {
+    if ((await Schools.exists({ _id: req.userID })) == null) {
       res.status(404).send("ID not found");
     } else {
       var classes = {};
-      await Schools.findById(req.params.id).then((val) => {
+      await Schools.findById(req.userID).then((val) => {
         classes = val.classes;
       });
       console.log(typeof req.body);
@@ -236,7 +236,7 @@ export async function addClass(req, res) {
       }
       classes.set(key, body);
       await Schools.updateOne(
-        { _id: req.params.id },
+        { _id: req.userID },
         { $set: { classes: classes } },
         (error) => {
           if (error) return res.status(500).send(error);
@@ -255,16 +255,16 @@ export async function addClass(req, res) {
 
 export async function updateClass(req, res) {
   try {
-    if ((await Schools.exists({ _id: req.params.id })) == null) {
+    if ((await Schools.exists({ _id: req.userID })) == null) {
       res.status(404).send("ID not found");
     } else {
       var classes = {};
-      await Schools.findById(req.params.id).then((val) => {
+      await Schools.findById(req.userID).then((val) => {
         classes = val.classes;
       });
       classes.set(req.params.classID, req.body);
       await Schools.updateOne(
-        { _id: req.params.id },
+        { _id: req.userID },
         { $set: { classes: classes } },
         (error) => {
           if (error) return res.status(500).send(error);
@@ -283,16 +283,16 @@ export async function updateClass(req, res) {
 
 export async function removeClass(req, res) {
   try {
-    if ((await Schools.exists({ _id: req.params.id })) == null) {
+    if ((await Schools.exists({ _id: req.userID })) == null) {
       res.status(404).send("ID not found");
     } else {
       var classes = {};
-      await Schools.findById(req.params.id).then((val) => {
+      await Schools.findById(req.userID).then((val) => {
         classes = val.classes;
       });
       classes.delete(req.params.classID);
       await Schools.updateOne(
-        { _id: req.params.id },
+        { _id: req.userID },
         { $set: { classes: classes } },
         (error) => {
           if (error) return res.status(500).send(error);
@@ -390,19 +390,8 @@ export async function registerSchool(req, res) {
     const school = new Schools(body);
     await school.save().then(() => console.log(body));
 
-    // Create JWT token
-    const token = JWT.sign(
-      { id: school.id, role: "school" },
-      process.env.JWT_SECRET,
-      {
-        expiresIn: 259200,
-      }
-    );
-
-    // Return JWT token
-    res.status(200).json({
-      token: token,
-    });
+    // Return
+    res.status(200).json(school);
   } catch (error) {
     console.log(error);
     res.status(500).send(error);
@@ -424,7 +413,7 @@ export async function loginSchool(req, res) {
         ],
       });
     }
-    var user = await Schools.find({ id: exists.id });
+    var user = await Schools.find({ _id: exists._id });
 
     // Verify the password
     let isMatch = await bcrypt.compare(password, user[0].password);
@@ -440,17 +429,20 @@ export async function loginSchool(req, res) {
 
     // Create JWT token
     const token = JWT.sign(
-      { id: user[0].id, role: "school" },
+      { id: user[0]._id, role: "school" },
       process.env.JWT_SECRET,
       {
         expiresIn: 259200,
       }
     );
 
-    // Return JWT token
-    res.status(200).json({
-      token: token,
-    });
+    // Store in cookie
+    res
+      .cookie("access_token", token, {
+        httpOnly: true,
+      })
+      .status(200)
+      .json({ userID: user[0]._id });
   } catch (error) {
     console.log(error);
     res.status(500).send(error);

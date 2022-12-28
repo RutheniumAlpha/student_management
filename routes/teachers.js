@@ -14,10 +14,10 @@ router.get("/:id", middleware.adminAuth, Controller.getTeacher);
 router.post("/", middleware.adminAuth, Controller.addNewTeacher);
 
 // Delete a teacher
-router.delete("/:id", middleware.teacherAuth, Controller.deleteTeacher);
+router.delete("/", middleware.teacherAuth, Controller.deleteTeacher);
 
 // Update a teacher
-router.put("/:id", middleware.teacherAuth, Controller.updateTeacher);
+router.put("/", middleware.teacherAuth, Controller.updateTeacher);
 
 // Register a teacher
 router.post(

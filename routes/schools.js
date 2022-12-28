@@ -15,55 +15,39 @@ router.get("/:id", middleware.adminAuth, Controller.getSchool);
 router.post("/", middleware.adminAuth, Controller.addNewSchool);
 
 // Delete a school
-router.delete("/:id", middleware.schoolAuth, Controller.deleteSchool);
+router.delete("/", middleware.schoolAuth, Controller.deleteSchool);
 
 // Update a school
-router.put("/:id", middleware.schoolAuth, Controller.updateSchool);
+router.put("/", middleware.schoolAuth, Controller.updateSchool);
 
 // Add student to a given class
-router.post(
-  "/:id/class/students/",
-  middleware.schoolAuth,
-  Controller.addStudent
-);
+router.post("/class/students/", middleware.schoolAuth, Controller.addStudent);
 
 // Remove student from a given class
 router.delete(
-  "/:id/class/students/",
+  "/class/students/",
   middleware.schoolAuth,
   Controller.removeStudent
 );
 
 // Add teacher to a given class
-router.post(
-  "/:id/class/teachers/",
-  middleware.schoolAuth,
-  Controller.addTeacher
-);
+router.post("/class/teachers/", middleware.schoolAuth, Controller.addTeacher);
 
 // Remove teacher from a given class
 router.delete(
-  "/:id/class/teachers/",
+  "/class/teachers/",
   middleware.schoolAuth,
   Controller.removeTeacher
 );
 
 // Add class to a school
-router.post("/:id/class/", middleware.schoolAuth, Controller.addClass);
+router.post("/class/", middleware.schoolAuth, Controller.addClass);
 
 // Remove class from a school
-router.delete(
-  "/:id/class/:classID",
-  middleware.schoolAuth,
-  Controller.removeClass
-);
+router.delete("/class/:classID", middleware.schoolAuth, Controller.removeClass);
 
 // Update a class
-router.put(
-  "/:id/class/:classID",
-  middleware.schoolAuth,
-  Controller.updateClass
-);
+router.put("/class/:classID", middleware.schoolAuth, Controller.updateClass);
 
 // Register a school
 router.post(

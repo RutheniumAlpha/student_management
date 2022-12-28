@@ -1,11 +1,11 @@
 import { verify } from "jsonwebtoken";
 
 export default async (req, res, next) => {
-  const token = req.header("x-auth-token");
+  const token = req.cookies.access_token;
 
   // Check for token
   if (!token) {
-    res.status(401).json({
+    return res.status(401).json({
       errors: [
         {
           msg: "No token found",
@@ -17,9 +17,10 @@ export default async (req, res, next) => {
   try {
     const user = verify(token, process.env.JWT_SECRET);
     if (user.role === "student") {
+      req.userID = user.id;
       next();
     } else {
-      res.status(400).json({
+      return res.status(400).json({
         errors: [
           {
             msg: "Invalid Token",
@@ -28,7 +29,7 @@ export default async (req, res, next) => {
       });
     }
   } catch (error) {
-    res.status(400).json({
+    return res.status(400).json({
       errors: [
         {
           msg: "Invalid Token",

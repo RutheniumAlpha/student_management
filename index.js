@@ -6,10 +6,14 @@ import studentsRoute from "./routes/students.js";
 import schoolsRoute from "./routes/schools.js";
 import teachersRoute from "./routes/teachers.js";
 
+import cookieParser from "cookie-parser";
+
 dotenv.config();
 var app = express();
 
+app.use(cookieParser());
 app.use(express.json());
+
 // Use the students router
 app.use("/students", studentsRoute);
 
