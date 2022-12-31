@@ -1,7 +1,7 @@
 import express from "express";
-import Controller from "../controllers/controller.js";
+import Controller from "../controllers/index.js";
 import { check } from "express-validator";
-import middleware from "../middleware/middleware.js";
+import middleware from "../middleware/index.js";
 
 var router = express.Router();
 
