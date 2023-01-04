@@ -11,8 +11,6 @@ import {
   addClass,
   removeClass,
   updateClass,
-  registerSchool,
-  loginSchool,
 } from "./schools.controller.js";
 
 import {
@@ -21,8 +19,6 @@ import {
   addNewStudent,
   deleteStudent,
   updateStudent,
-  registerStudent,
-  loginStudent,
 } from "./students.controller.js";
 
 import {
@@ -31,9 +27,9 @@ import {
   addNewTeacher,
   deleteTeacher,
   updateTeacher,
-  registerTeacher,
-  loginTeacher,
 } from "./teachers.controller.js";
+
+import { register, login } from "./auth.controller.js";
 
 //Export all controller functions
 export default {
@@ -42,8 +38,6 @@ export default {
   addNewSchool,
   deleteSchool,
   updateSchool,
-  registerSchool,
-  loginSchool,
   addStudent,
   removeStudent,
   addTeacher,
@@ -56,13 +50,11 @@ export default {
   addNewStudent,
   deleteStudent,
   updateStudent,
-  registerStudent,
-  loginStudent,
   getAllTeachers,
   getTeacher,
   addNewTeacher,
   deleteTeacher,
   updateTeacher,
-  registerTeacher,
-  loginTeacher,
+  register,
+  login,
 };

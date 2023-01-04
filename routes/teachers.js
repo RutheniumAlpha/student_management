@@ -1,6 +1,5 @@
 import express from "express";
 import Controller from "../controllers/index.js";
-import { check } from "express-validator";
 import middleware from "../middleware/index.js";
 
 var router = express.Router();
@@ -14,26 +13,9 @@ router.get("/:id", middleware.adminAuth, Controller.getTeacher);
 router.post("/", middleware.adminAuth, Controller.addNewTeacher);
 
 // Delete a teacher
-router.delete("/", middleware.teacherAuth, Controller.deleteTeacher);
+router.delete("/", middleware.tokenAuth, Controller.deleteTeacher);
 
 // Update a teacher
-router.put("/", middleware.teacherAuth, Controller.updateTeacher);
-
-// Register a teacher
-router.post(
-  "/register",
-  [
-    check("username", "Username must be greater than 4 characters.").isLength({
-      min: 5,
-    }),
-    check("password", "Password must be greater than 7 characters.").isLength({
-      min: 8,
-    }),
-  ],
-  Controller.registerTeacher
-);
-
-// Login as teacher
-router.post("/login", Controller.loginTeacher);
+router.put("/", middleware.tokenAuth, Controller.updateTeacher);
 
 export default router;

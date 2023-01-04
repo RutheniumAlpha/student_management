@@ -16,18 +16,9 @@ export default async (req, res, next) => {
 
   try {
     const user = verify(token, process.env.JWT_SECRET);
-    if (user.role === "student") {
-      req.userID = user.id;
-      next();
-    } else {
-      return res.status(400).json({
-        errors: [
-          {
-            msg: "Invalid Token",
-          },
-        ],
-      });
-    }
+    req.userID = user.id;
+    req.role = user.role;
+    next();
   } catch (error) {
     return res.status(400).json({
       errors: [

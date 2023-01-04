@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 
 const schoolsSchema = mongoose.Schema({
-  schoolName: String,
-  schoolAddress: String,
+  name: String,
+  address: String,
   contactNumber: Number,
   email: String,
   classes: {
@@ -13,6 +13,7 @@ const schoolsSchema = mongoose.Schema({
   },
   username: String,
   password: String,
+  userCollectionID: String,
 });
 
 export default mongoose.model("Schools", schoolsSchema);

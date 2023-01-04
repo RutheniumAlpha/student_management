@@ -7,6 +7,7 @@ const teachersSchema = mongoose.Schema({
   phone: Number,
   username: String,
   password: String,
+  userCollectionID: String,
 });
 
 export default mongoose.model("Teachers", teachersSchema);

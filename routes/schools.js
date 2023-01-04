@@ -1,6 +1,5 @@
 import express from "express";
 import Controller from "../controllers/index.js";
-import { check } from "express-validator";
 import middleware from "../middleware/index.js";
 
 var router = express.Router();
@@ -15,55 +14,38 @@ router.get("/:id", middleware.adminAuth, Controller.getSchool);
 router.post("/", middleware.adminAuth, Controller.addNewSchool);
 
 // Delete a school
-router.delete("/", middleware.schoolAuth, Controller.deleteSchool);
+router.delete("/", middleware.tokenAuth, Controller.deleteSchool);
 
 // Update a school
-router.put("/", middleware.schoolAuth, Controller.updateSchool);
+router.put("/", middleware.tokenAuth, Controller.updateSchool);
 
 // Add student to a given class
-router.post("/class/students/", middleware.schoolAuth, Controller.addStudent);
+router.post("/class/students/", middleware.tokenAuth, Controller.addStudent);
 
 // Remove student from a given class
 router.delete(
   "/class/students/",
-  middleware.schoolAuth,
+  middleware.tokenAuth,
   Controller.removeStudent
 );
 
 // Add teacher to a given class
-router.post("/class/teachers/", middleware.schoolAuth, Controller.addTeacher);
+router.post("/class/teachers/", middleware.tokenAuth, Controller.addTeacher);
 
 // Remove teacher from a given class
 router.delete(
   "/class/teachers/",
-  middleware.schoolAuth,
+  middleware.tokenAuth,
   Controller.removeTeacher
 );
 
 // Add class to a school
-router.post("/class/", middleware.schoolAuth, Controller.addClass);
+router.post("/class/", middleware.tokenAuth, Controller.addClass);
 
 // Remove class from a school
-router.delete("/class/:classID", middleware.schoolAuth, Controller.removeClass);
+router.delete("/class/:classID", middleware.tokenAuth, Controller.removeClass);
 
 // Update a class
-router.put("/class/:classID", middleware.schoolAuth, Controller.updateClass);
-
-// Register a school
-router.post(
-  "/register",
-  [
-    check("username", "Username must be greater than 4 characters.").isLength({
-      min: 5,
-    }),
-    check("password", "Password must be greater than 7 characters.").isLength({
-      min: 8,
-    }),
-  ],
-  Controller.registerSchool
-);
-
-// Login as school
-router.post("/login", Controller.loginSchool);
+router.put("/class/:classID", middleware.tokenAuth, Controller.updateClass);
 
 export default router;

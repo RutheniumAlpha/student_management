@@ -5,8 +5,10 @@ import dotenv from "dotenv";
 import studentsRoute from "./routes/students.js";
 import schoolsRoute from "./routes/schools.js";
 import teachersRoute from "./routes/teachers.js";
+import authRoute from "./routes/auth.js";
 
 import cookieParser from "cookie-parser";
+import middleware from "./middleware/index.js";
 
 dotenv.config();
 var app = express();
@@ -22,6 +24,9 @@ app.use("/schools", schoolsRoute);
 
 // Use the teachers route
 app.use("/teachers", teachersRoute);
+
+// Use the auth route
+app.use("/auth", authRoute);
 
 async function connect() {
   try {

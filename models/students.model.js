@@ -9,6 +9,7 @@ const studentsSchema = mongoose.Schema({
   contact: Number,
   username: String,
   password: String,
+  userCollectionID: String,
 });
 
 export default mongoose.model("Students", studentsSchema);

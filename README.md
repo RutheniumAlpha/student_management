@@ -5,62 +5,56 @@ Access the API from [https://student-management.glitch.me/](https://student-mana
 
 # API Documentation
 
-1. **`GET`** `/students/` List all the students.
+- **`POST`** `/auth/register/` Register into the server
 
-2. **`GET`** `/students/:id` Get the details of a single student by ID.
-
-3. **`POST`** `/students/` Add a new student.
-
-4. **`PUT`** `/students/` Update an existing student.
-
-5. **`DELETE`** `/students/` Delete an existing student.
-
-6. **`POST`** `/students/register/` Register a student.
-
-7. **`POST`** `/students/login/` Login as an student.
+- **`POST`** `/auth/login/` Login into the server
 
 ---
 
-8. **`GET`** `/teachers/` List all the teachers.
+- **`GET`** `/students/` List all the students.
 
-9. **`GET`** `/teachers/:id` Get the details of a single teacher by ID.
+- **`GET`** `/students/:id` Get the details of a single student by ID.
 
-10. **`POST`** `/teachers/` Add a new teacher.
+- **`POST`** `/students/` Add a new student.
 
-11. **`PUT`** `/teachers/` Update an existing teacher.
+- **`PUT`** `/students/` Update an existing student.
 
-12. **`DELETE`** `/teachers/` Delete an existing teacher.
-
-13. **`POST`** `/teachers/register/` Register a teacher.
-
-14. **`POST`** `/teachers/login/` Login as an teacher.
+- **`DELETE`** `/students/` Delete an existing student.
 
 ---
 
-15. **`GET`** `/schools/` List all the schools.
+- **`GET`** `/teachers/` List all the teachers.
 
-16. **`GET`** `/schools/:id` Get the details of a single school by ID.
+- **`GET`** `/teachers/:id` Get the details of a single teacher by ID.
 
-17. **`POST`** `/schools/` Add a new school.
+- **`POST`** `/teachers/` Add a new teacher.
 
-18. **`PUT`** `/schools/` Update an existing school.
+- **`PUT`** `/teachers/` Update an existing teacher.
 
-19. **`DELETE`** `/schools/` Delete an existing school.
+- **`DELETE`** `/teachers/` Delete an existing teacher.
 
-20. **`POST`** `/schools/class/` Add a new class to a school.
+---
 
-21. **`DELETE`** `/schools/class/:classID` Remove a class from a school.
+- **`GET`** `/schools/` List all the schools.
 
-22. **`PUT`** `/schools/class/:classID` Update a class of a school.
+- **`GET`** `/schools/:id` Get the details of a single school by ID.
 
-23. **`POST`** `/schools/class/students/?studentID=&classID=` Add a student to a class by Student ID.
+- **`POST`** `/schools/` Add a new school.
 
-24. **`DELETE`** `/schools/class/students/?studentID=&classID=` Remove a student from a class by Student ID.
+- **`PUT`** `/schools/` Update an existing school.
 
-25. **`POST`** `/schools/class/teachers/?teacherID=&classID=` Add a teacher to a class by Teacher ID.
+- **`DELETE`** `/schools/` Delete an existing school.
 
-26. **`DELETE`** `/schools/class/teachers/?teacherID=&classID=` Remove a teacher from a class by Teacher ID.
+- **`POST`** `/schools/class/` Add a new class to a school.
 
-27. **`POST`** `/schools/register/` Register a school.
+- **`DELETE`** `/schools/class/:classID` Remove a class from a school.
 
-28. **`POST`** `/schools/login/` Login as an school.
+- **`PUT`** `/schools/class/:classID` Update a class of a school.
+
+- **`POST`** `/schools/class/students/?studentID=&classID=` Add a student to a class by Student ID.
+
+- **`DELETE`** `/schools/class/students/?studentID=&classID=` Remove a student from a class by Student ID.
+
+- **`POST`** `/schools/class/teachers/?teacherID=&classID=` Add a teacher to a class by Teacher ID.
+
+- **`DELETE`** `/schools/class/teachers/?teacherID=&classID=` Remove a teacher from a class by Teacher ID.

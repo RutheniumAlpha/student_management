@@ -1,7 +1,4 @@
 import Schools from "../models/schools.model.js";
-import { validationResult } from "express-validator";
-import bcrypt from "bcrypt";
-import JWT from "jsonwebtoken";
 
 export async function getAllSchools(_req, res) {
   try {
@@ -49,6 +46,15 @@ export async function addNewSchool(req, res) {
 }
 
 export async function deleteSchool(req, res) {
+  if (req.role != "school") {
+    return res.status(404).json({
+      errors: [
+        {
+          msg: "Access denied",
+        },
+      ],
+    });
+  }
   try {
     if ((await Schools.exists({ _id: req.userID })) == null) {
       res.status(404).send("ID not found");
@@ -68,6 +74,15 @@ export async function deleteSchool(req, res) {
 }
 
 export async function updateSchool(req, res) {
+  if (req.role != "school") {
+    return res.status(404).json({
+      errors: [
+        {
+          msg: "Access denied",
+        },
+      ],
+    });
+  }
   try {
     if ((await Schools.exists({ _id: req.userID })) == null) {
       res.status(404).send("ID not found");
@@ -87,6 +102,15 @@ export async function updateSchool(req, res) {
 }
 
 export async function addStudent(req, res) {
+  if (req.role != "school") {
+    return res.status(404).json({
+      errors: [
+        {
+          msg: "Access denied",
+        },
+      ],
+    });
+  }
   try {
     if ((await Schools.exists({ _id: req.userID })) == null) {
       res.status(404).send("ID not found");
@@ -117,6 +141,15 @@ export async function addStudent(req, res) {
 }
 
 export async function removeStudent(req, res) {
+  if (req.role != "school") {
+    return res.status(404).json({
+      errors: [
+        {
+          msg: "Access denied",
+        },
+      ],
+    });
+  }
   try {
     if ((await Schools.exists({ _id: req.userID })) == null) {
       res.status(404).send("ID not found");
@@ -150,6 +183,15 @@ export async function removeStudent(req, res) {
 }
 
 export async function addTeacher(req, res) {
+  if (req.role != "school") {
+    return res.status(404).json({
+      errors: [
+        {
+          msg: "Access denied",
+        },
+      ],
+    });
+  }
   try {
     if ((await Schools.exists({ _id: req.userID })) == null) {
       res.status(404).send("ID not found");
@@ -180,6 +222,15 @@ export async function addTeacher(req, res) {
 }
 
 export async function removeTeacher(req, res) {
+  if (req.role != "school") {
+    return res.status(404).json({
+      errors: [
+        {
+          msg: "Access denied",
+        },
+      ],
+    });
+  }
   try {
     if ((await Schools.exists({ _id: req.userID })) == null) {
       res.status(404).send("ID not found");
@@ -213,6 +264,15 @@ export async function removeTeacher(req, res) {
 }
 
 export async function addClass(req, res) {
+  if (req.role != "school") {
+    return res.status(404).json({
+      errors: [
+        {
+          msg: "Access denied",
+        },
+      ],
+    });
+  }
   try {
     if ((await Schools.exists({ _id: req.userID })) == null) {
       res.status(404).send("ID not found");
@@ -254,6 +314,15 @@ export async function addClass(req, res) {
 }
 
 export async function updateClass(req, res) {
+  if (req.role != "school") {
+    return res.status(404).json({
+      errors: [
+        {
+          msg: "Access denied",
+        },
+      ],
+    });
+  }
   try {
     if ((await Schools.exists({ _id: req.userID })) == null) {
       res.status(404).send("ID not found");
@@ -282,6 +351,15 @@ export async function updateClass(req, res) {
 }
 
 export async function removeClass(req, res) {
+  if (req.role != "school") {
+    return res.status(404).json({
+      errors: [
+        {
+          msg: "Access denied",
+        },
+      ],
+    });
+  }
   try {
     if ((await Schools.exists({ _id: req.userID })) == null) {
       res.status(404).send("ID not found");
@@ -353,98 +431,4 @@ function generateRandomKey(length) {
   }
   console.log(key);
   return key;
-}
-
-export async function registerSchool(req, res) {
-  try {
-    const { username, password } = req.body;
-    var body = req.body;
-
-    // Body validation
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(422).json({
-        errors: errors.array(),
-      });
-    }
-
-    // User already existing
-    var exists = await Schools.exists({ username: username });
-    if (exists) {
-      return res.status(422).json({
-        errors: [
-          {
-            msg: "The username already exists.",
-            param: "username",
-            location: "body",
-          },
-        ],
-      });
-    }
-
-    // Hash the password
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Add user to database
-    body["password"] = hashedPassword;
-    const school = new Schools(body);
-    await school.save().then(() => console.log(body));
-
-    // Return
-    res.status(200).json(school);
-  } catch (error) {
-    console.log(error);
-    res.status(500).send(error);
-  }
-}
-
-export async function loginSchool(req, res) {
-  try {
-    const { username, password } = req.body;
-
-    // User existing
-    var exists = await Schools.exists({ username: username });
-    if (!exists) {
-      return res.status(422).json({
-        errors: [
-          {
-            msg: "Invalid Credentials.",
-          },
-        ],
-      });
-    }
-    var user = await Schools.find({ _id: exists._id });
-
-    // Verify the password
-    let isMatch = await bcrypt.compare(password, user[0].password);
-    if (!isMatch) {
-      return res.status(422).json({
-        errors: [
-          {
-            msg: "Invalid Credentials.",
-          },
-        ],
-      });
-    }
-
-    // Create JWT token
-    const token = JWT.sign(
-      { id: user[0]._id, role: "school" },
-      process.env.JWT_SECRET,
-      {
-        expiresIn: 259200,
-      }
-    );
-
-    // Store in cookie
-    res
-      .cookie("access_token", token, {
-        httpOnly: true,
-      })
-      .status(200)
-      .json({ userID: user[0]._id });
-  } catch (error) {
-    console.log(error);
-    res.status(500).send(error);
-  }
 }
