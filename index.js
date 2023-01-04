@@ -1,14 +1,12 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
 
 import studentsRoute from "./routes/students.js";
 import schoolsRoute from "./routes/schools.js";
 import teachersRoute from "./routes/teachers.js";
 import authRoute from "./routes/auth.js";
-
-import cookieParser from "cookie-parser";
-import middleware from "./middleware/index.js";
 
 dotenv.config();
 var app = express();
