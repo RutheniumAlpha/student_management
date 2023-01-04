@@ -1,7 +1,6 @@
 # Student Management
 
 Manage the students and schools by using the following API.  
-Access the API from [https://student-management.glitch.me/](https://student-management.glitch.me/)
 
 # API Documentation
 
