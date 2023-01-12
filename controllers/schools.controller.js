@@ -1,119 +1,47 @@
 import Schools from "../models/schools.model.js";
 
-export async function getAllSchools(_req, res) {
-  try {
-    Schools.find((err, val) => {
-      if (err) {
-        res.status(500).send(err);
-      } else {
-        res.status(200).send(val);
-      }
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(500).send(error);
-  }
-}
-
-export async function getSchool(req, res) {
-  try {
-    Schools.find({ _id: req.params.id }, (err, val) => {
-      if (err) {
-        res.status(500).send(err);
-      } else {
-        res.status(200).send(val);
-      }
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(500).send(error);
-  }
-}
-
-export async function addNewSchool(req, res) {
-  try {
-    const school = new Schools(req.body);
-    await school
-      .save()
-      .then(() => console.log(`School ${req.body.name} added.`));
-
-    // Return (200)
-    res.status(200).send(school);
-  } catch (error) {
-    console.log(error);
-    res.status(500).send(error);
-  }
-}
-
 export async function deleteSchool(req, res) {
-  if (req.role != "school") {
-    return res.status(404).json({
-      errors: [
-        {
-          msg: "Access denied",
-        },
-      ],
-    });
-  }
   try {
     if ((await Schools.exists({ _id: req.userID })) == null) {
-      res.status(404).send("ID not found");
+      res.status(404).json("ID not found");
     } else {
       Schools.deleteOne({ _id: req.userID }, (error) => {
-        if (error) return res.status(500).send(error);
+        if (error) return res.status(500).json(error);
       })
         .clone()
         .then(() => {
-          res.status(200).send("Deleted");
+          res.status(200).json("Deleted");
         });
     }
   } catch (error) {
     console.log(error);
-    res.status(500).send(error);
+    res.status(500).json(error);
   }
 }
 
 export async function updateSchool(req, res) {
-  if (req.role != "school") {
-    return res.status(404).json({
-      errors: [
-        {
-          msg: "Access denied",
-        },
-      ],
-    });
-  }
   try {
     if ((await Schools.exists({ _id: req.userID })) == null) {
-      res.status(404).send("ID not found");
+      res.status(404).json("ID not found");
     } else {
       Schools.updateOne({ _id: req.userID }, req.body, (error) => {
-        if (error) return res.status(500).send(error);
+        if (error) return res.status(500).json(error);
       })
         .clone()
         .then(() => {
-          res.status(200).send(req.body);
+          res.status(200).json(req.body);
         });
     }
   } catch (error) {
     console.log(error);
-    res.status(500).send(error);
+    res.status(500).json(error);
   }
 }
 
 export async function addStudent(req, res) {
-  if (req.role != "school") {
-    return res.status(404).json({
-      errors: [
-        {
-          msg: "Access denied",
-        },
-      ],
-    });
-  }
   try {
     if ((await Schools.exists({ _id: req.userID })) == null) {
-      res.status(404).send("ID not found");
+      res.status(404).json("ID not found");
     } else {
       var classes = {};
       var classID = req.query.classID;
@@ -126,33 +54,24 @@ export async function addStudent(req, res) {
         { _id: req.userID },
         { $set: { classes: classes } },
         (error) => {
-          if (error) return res.status(500).send(error);
+          if (error) return res.status(500).json(error);
         }
       )
         .clone()
         .then(() => {
-          res.status(200).send(`Student added`);
+          res.status(200).json(`Student added`);
         });
     }
   } catch (error) {
     console.log(error);
-    res.status(500).send(error);
+    res.status(500).json(error);
   }
 }
 
 export async function removeStudent(req, res) {
-  if (req.role != "school") {
-    return res.status(404).json({
-      errors: [
-        {
-          msg: "Access denied",
-        },
-      ],
-    });
-  }
   try {
     if ((await Schools.exists({ _id: req.userID })) == null) {
-      res.status(404).send("ID not found");
+      res.status(404).json("ID not found");
     } else {
       var classes = {};
       var classID = req.query.classID;
@@ -168,33 +87,24 @@ export async function removeStudent(req, res) {
         { _id: req.userID },
         { $set: { classes: classes } },
         (error) => {
-          if (error) return res.status(500).send(error);
+          if (error) return res.status(500).json(error);
         }
       )
         .clone()
         .then(() => {
-          res.status(200).send(`Student removed`);
+          res.status(200).json(`Student removed`);
         });
     }
   } catch (error) {
     console.log(error);
-    res.status(500).send(error);
+    res.status(500).json(error);
   }
 }
 
 export async function addTeacher(req, res) {
-  if (req.role != "school") {
-    return res.status(404).json({
-      errors: [
-        {
-          msg: "Access denied",
-        },
-      ],
-    });
-  }
   try {
     if ((await Schools.exists({ _id: req.userID })) == null) {
-      res.status(404).send("ID not found");
+      res.status(404).json("ID not found");
     } else {
       var classes = {};
       var classID = req.query.classID;
@@ -207,33 +117,24 @@ export async function addTeacher(req, res) {
         { _id: req.userID },
         { $set: { classes: classes } },
         (error) => {
-          if (error) return res.status(500).send(error);
+          if (error) return res.status(500).json(error);
         }
       )
         .clone()
         .then(() => {
-          res.status(200).send(`Teacher added`);
+          res.status(200).json(`Teacher added`);
         });
     }
   } catch (error) {
     console.log(error);
-    res.status(500).send(error);
+    res.status(500).json(error);
   }
 }
 
 export async function removeTeacher(req, res) {
-  if (req.role != "school") {
-    return res.status(404).json({
-      errors: [
-        {
-          msg: "Access denied",
-        },
-      ],
-    });
-  }
   try {
     if ((await Schools.exists({ _id: req.userID })) == null) {
-      res.status(404).send("ID not found");
+      res.status(404).json("ID not found");
     } else {
       var classes = {};
       var classID = req.query.classID;
@@ -249,33 +150,24 @@ export async function removeTeacher(req, res) {
         { _id: req.userID },
         { $set: { classes: classes } },
         (error) => {
-          if (error) return res.status(500).send(error);
+          if (error) return res.status(500).json(error);
         }
       )
         .clone()
         .then(() => {
-          res.status(200).send(`Teacher removed`);
+          res.status(200).json(`Teacher removed`);
         });
     }
   } catch (error) {
     console.log(error);
-    res.status(500).send(error);
+    res.status(500).json(error);
   }
 }
 
 export async function addClass(req, res) {
-  if (req.role != "school") {
-    return res.status(404).json({
-      errors: [
-        {
-          msg: "Access denied",
-        },
-      ],
-    });
-  }
   try {
     if ((await Schools.exists({ _id: req.userID })) == null) {
-      res.status(404).send("ID not found");
+      res.status(404).json("ID not found");
     } else {
       var classes = {};
       await Schools.findById(req.userID).then((val) => {
@@ -299,33 +191,24 @@ export async function addClass(req, res) {
         { _id: req.userID },
         { $set: { classes: classes } },
         (error) => {
-          if (error) return res.status(500).send(error);
+          if (error) return res.status(500).json(error);
         }
       )
         .clone()
         .then(() => {
-          res.status(200).send(`New class ${key}`);
+          res.status(200).json(`New class ${key}`);
         });
     }
   } catch (error) {
     console.log(error);
-    res.status(500).send(error);
+    res.status(500).json(error);
   }
 }
 
 export async function updateClass(req, res) {
-  if (req.role != "school") {
-    return res.status(404).json({
-      errors: [
-        {
-          msg: "Access denied",
-        },
-      ],
-    });
-  }
   try {
     if ((await Schools.exists({ _id: req.userID })) == null) {
-      res.status(404).send("ID not found");
+      res.status(404).json("ID not found");
     } else {
       var classes = {};
       await Schools.findById(req.userID).then((val) => {
@@ -336,33 +219,24 @@ export async function updateClass(req, res) {
         { _id: req.userID },
         { $set: { classes: classes } },
         (error) => {
-          if (error) return res.status(500).send(error);
+          if (error) return res.status(500).json(error);
         }
       )
         .clone()
         .then(() => {
-          res.status(200).send(`Updated class ${req.params.classID}`);
+          res.status(200).json(`Updated class ${req.params.classID}`);
         });
     }
   } catch (error) {
     console.log(error);
-    res.status(500).send(error);
+    res.status(500).json(error);
   }
 }
 
 export async function removeClass(req, res) {
-  if (req.role != "school") {
-    return res.status(404).json({
-      errors: [
-        {
-          msg: "Access denied",
-        },
-      ],
-    });
-  }
   try {
     if ((await Schools.exists({ _id: req.userID })) == null) {
-      res.status(404).send("ID not found");
+      res.status(404).json("ID not found");
     } else {
       var classes = {};
       await Schools.findById(req.userID).then((val) => {
@@ -373,17 +247,17 @@ export async function removeClass(req, res) {
         { _id: req.userID },
         { $set: { classes: classes } },
         (error) => {
-          if (error) return res.status(500).send(error);
+          if (error) return res.status(500).json(error);
         }
       )
         .clone()
         .then(() => {
-          res.status(200).send(`Deleted class ${req.params.classID}`);
+          res.status(200).json(`Deleted class ${req.params.classID}`);
         });
     }
   } catch (error) {
     console.log(error);
-    res.status(500).send(error);
+    res.status(500).json(error);
   }
 }
 

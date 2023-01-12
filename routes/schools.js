@@ -4,15 +4,6 @@ import middleware from "../middleware/index.js";
 
 var router = express.Router();
 
-// Get all the schools
-router.get("/", middleware.adminAuth, Controller.getAllSchools);
-
-// Get a single school with the given id
-router.get("/:id", middleware.adminAuth, Controller.getSchool);
-
-// Add a new school
-router.post("/", middleware.adminAuth, Controller.addNewSchool);
-
 // Delete a school
 router.delete("/", middleware.tokenAuth, Controller.deleteSchool);
 

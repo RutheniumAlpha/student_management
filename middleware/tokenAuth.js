@@ -16,9 +16,25 @@ export default async (req, res, next) => {
 
   try {
     const user = verify(token, process.env.JWT_SECRET);
-    req.userID = user.id;
-    req.role = user.role;
-    next();
+    console.log(user.role, " == ", req.baseUrl);
+    if (user.role == "student" && req.baseUrl == "/students") {
+      req.userID = user.id;
+      next();
+    } else if (user.role == "teacher" && req.baseUrl == "/teachers") {
+      req.userID = user.id;
+      next();
+    } else if (user.role == "school" && req.baseUrl == "/schools") {
+      req.userID = user.id;
+      next();
+    } else {
+      return res.status(404).json({
+        errors: [
+          {
+            msg: "Request Denied",
+          },
+        ],
+      });
+    }
   } catch (error) {
     return res.status(400).json({
       errors: [

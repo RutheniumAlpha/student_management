@@ -1,7 +1,4 @@
 import {
-  getAllSchools,
-  getSchool,
-  addNewSchool,
   deleteSchool,
   updateSchool,
   addStudent,
@@ -13,26 +10,28 @@ import {
   updateClass,
 } from "./schools.controller.js";
 
-import {
-  getAllStudents,
-  getStudent,
-  addNewStudent,
-  deleteStudent,
-  updateStudent,
-} from "./students.controller.js";
+import { deleteStudent, updateStudent } from "./students.controller.js";
+
+import { deleteTeacher, updateTeacher } from "./teachers.controller.js";
 
 import {
-  getAllTeachers,
-  getTeacher,
+  addNewSchool,
+  addNewStudent,
   addNewTeacher,
-  deleteTeacher,
-  updateTeacher,
-} from "./teachers.controller.js";
+  getAllSchools,
+  getAllStudents,
+  getAllTeachers,
+  getSchool,
+  getTeacher,
+  getStudent,
+  allData,
+} from "./admin.controller.js";
 
 import { register, login } from "./auth.controller.js";
 
 //Export all controller functions
 export default {
+  allData,
   getAllSchools,
   getSchool,
   addNewSchool,

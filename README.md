@@ -1,44 +1,50 @@
 # Student Management
 
-Manage the students and schools by using the following API.  
+Manage the students and schools by using the following API.
 
 # API Documentation
+
+## Admin
+
+- **`GET`** `admin/data/` Returns the whole database data.
+
+- **`GET`** `admin/students/` List all the students.
+
+- **`GET`** `admin/students/:id` Get the details of a single student by ID.
+
+- **`POST`** `admin/students/` Add a new student.
+
+- **`GET`** `admin/teachers/` List all the teachers.
+
+- **`GET`** `admin/teachers/:id` Get the details of a single teacher by ID.
+
+- **`POST`** `admin/teachers/` Add a new teacher.
+
+- **`GET`** `admin/schools/` List all the schools.
+
+- **`GET`** `admin/schools/:id` Get the details of a single school by ID.
+
+- **`POST`** `admin/schools/` Add a new school.
+
+## Authentication
 
 - **`POST`** `/auth/register/` Register into the server
 
 - **`POST`** `/auth/login/` Login into the server
 
----
-
-- **`GET`** `/students/` List all the students.
-
-- **`GET`** `/students/:id` Get the details of a single student by ID.
-
-- **`POST`** `/students/` Add a new student.
+## Students
 
 - **`PUT`** `/students/` Update an existing student.
 
 - **`DELETE`** `/students/` Delete an existing student.
 
----
-
-- **`GET`** `/teachers/` List all the teachers.
-
-- **`GET`** `/teachers/:id` Get the details of a single teacher by ID.
-
-- **`POST`** `/teachers/` Add a new teacher.
+## Teachers
 
 - **`PUT`** `/teachers/` Update an existing teacher.
 
 - **`DELETE`** `/teachers/` Delete an existing teacher.
 
----
-
-- **`GET`** `/schools/` List all the schools.
-
-- **`GET`** `/schools/:id` Get the details of a single school by ID.
-
-- **`POST`** `/schools/` Add a new school.
+## Schools
 
 - **`PUT`** `/schools/` Update an existing school.
 

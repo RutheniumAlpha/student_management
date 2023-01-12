@@ -65,11 +65,15 @@ export async function register(req, res) {
     await user.save();
     await userData.save();
 
+    let printData = user.toObject();
+
+    delete printData["password"];
+
     // Return
-    res.status(200).json(user);
+    res.status(200).json(printData);
   } catch (error) {
     console.log(error);
-    res.status(500).send(error);
+    res.status(500).json(error);
   }
 }
 
@@ -80,7 +84,6 @@ export async function login(req, res) {
     // User existing
     var exists = await Users.exists({
       username: username,
-      role: req.body["role"],
     });
     if (!exists) {
       return res.status(422).json({
@@ -92,6 +95,7 @@ export async function login(req, res) {
       });
     }
     var user = await Users.find({ _id: exists._id });
+    var userRole = user[0].role;
 
     // Verify the password
     let isMatch = await bcrypt.compare(password, user[0].password);
@@ -105,7 +109,7 @@ export async function login(req, res) {
       });
     }
     var dbID = "";
-    switch (req.body["role"]) {
+    switch (userRole) {
       case "student":
         await Students.find({ userCollectionID: user[0].id }).then((val) => {
           if (val.length != 0) {
@@ -142,7 +146,7 @@ export async function login(req, res) {
     }
     // Create JWT token
     const token = JWT.sign(
-      { id: dbID, role: req.body["role"] },
+      { id: dbID, role: userRole },
       process.env.JWT_SECRET,
       {
         expiresIn: 259200,
@@ -158,6 +162,6 @@ export async function login(req, res) {
       .json({ userID: user[0]._id, dbID: dbID });
   } catch (error) {
     console.log(error);
-    res.status(500).send(error);
+    res.status(500).json(error);
   }
 }
