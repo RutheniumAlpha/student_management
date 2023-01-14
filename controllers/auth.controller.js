@@ -159,7 +159,7 @@ export async function login(req, res) {
         httpOnly: true,
       })
       .status(200)
-      .json({ userID: user[0]._id, dbID: dbID });
+      .json({ userColID: user[0]._id, dbColID: dbID, role: userRole });
   } catch (error) {
     console.log(error);
     res.status(500).json(error);
